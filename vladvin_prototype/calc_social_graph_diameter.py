@@ -42,7 +42,7 @@ class VkRequester:
         # code=return [API.friends.get({"user_id":123452}), API.friends.get({"user_id":12343}), API.friends.get({"user_id":282197574})];
         friends = []
         checked_ids_count = 0
-        print 'Request size: ' + str(len(user_ids))
+        print('Request size: ' + str(len(user_ids)))
         while (checked_ids_count < len(user_ids)):
             i = 0
             code = 'return ['
@@ -84,16 +84,12 @@ class Handshaker:
                 if (user_id not in handshakes) and (user_id in tmp_search_set):
                     handshakes[user_id] = number_of_hands
             search_set = tmp_search_set
-            print handshakes
+            print(handshakes)
 
         return handshakes
 
     def __is_handshake_full(self, handshakes, user_ids):
-        for user_id in user_ids:
-            if user_id not in handshakes:
-                return False
-        return True
-            
+        return all(user_id in handshakes for user_id in user_ids)
 
 if __name__ == "__main__":
     id_generator = UserIdsGenerator(1, 100 * 1000 * 1000)
