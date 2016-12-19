@@ -1,6 +1,10 @@
 import vk
 
-session = vk.Session()
+session = vk.AuthSession(
+    app_id=5648449,
+    user_login='XXX',
+    user_password='XXX')
+# session = vk.Session()
 vkapi = vk.API(session, lang='ru')
 
 
@@ -14,8 +18,15 @@ def get_friends_uids(uid):
         return cache[uid]
     else:
         try:
-            result = set(vkapi.friends.get(uid=uid))
-        except:
+            # result = set(vkapi.friends.get(uid=uid, order='name', fields='last_name'))
+            for user in vkapi.friends.get(uid=uid, order='hints', fields='last_name'):
+                try:
+                    print (user)
+                except:
+                    continue
+            exit()
+        except Exception as ex:
+            print (ex)
             result = set()
         cache[uid] = result
         # print("New:" + str(result))
